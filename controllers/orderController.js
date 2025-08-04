@@ -1,17 +1,17 @@
 const Order = require('../models/Order');
+const sendOrderConfirmationEmail = require('../utils/mailer');
 
 exports.placeOrder = async (req, res) => {
   try {
-    console.log("🔥 Received order data:", req.body); // Log incoming data
-
     const order = new Order(req.body);
-    const savedOrder = await order.save();
+    await order.save();
 
-    console.log("✅ Order saved with ID:", savedOrder._id); // Log saved ID
+    // 📨 Send email to aunt
+    await sendOrderConfirmationEmail(order);
 
-    res.status(201).json({ success: true, orderId: savedOrder._id });
+    res.status(201).json({ success: true, orderId: order._id });
   } catch (err) {
-    console.error("❌ Error saving order:", err.message); // Log specific error message
+    console.error("❌ Error saving order or sending email:", err.message);
     res.status(500).json({ success: false, message: "Server Error" });
   }
 };
