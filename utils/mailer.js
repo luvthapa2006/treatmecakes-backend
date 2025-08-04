@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 function sendOrderConfirmationEmail(order) {
   const mailOptions = {
     from: `"SweetSlice Orders" <${process.env.EMAIL_USER}>`,
-    to: "yourauntsemail@example.com", // 📬 Change to your aunt's email
+    to: "thapaluv1029@gmail.com", // 📬 Change to your aunt's email
     subject: "🎂 New Bakery Order Received!",
     html: `
       <h2>New Order Received 🎉</h2>
